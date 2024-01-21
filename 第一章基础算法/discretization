@@ -1,0 +1,79 @@
+离散化：
+
+    vector<int> alls;
+    sort(alls.begin(), alls.end());
+    alls.erase(unique(all.begin(), alls.end()), alls.end());
+
+    int find(int x) { // 找到第一个大于等于x的值
+        int l = 0, r = alls.size() - 1;
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (alls[mid] >= x) r = mid;
+            else l = mid + 1;
+        }
+        return r + 1;//映射到1,2。。。n
+    }
+
+
+
+    unique function for java:
+
+    vector<int>::iterator unique(vector<int> &a) {
+        int j = 0;
+        for (int i = 1; i < a.size(); i++) {
+            if (!i || a[i] != a[i - 1] ) {
+                a[j++] = a[i];
+            }
+        }
+        return a.begin() + j;
+    }
+
+
+
+    在C++中，`std::unique`是一个标准库函数，位于 `<algorithm>` 头文件中。它用于在容器中去除相邻的重复元素，将重复元素移到容器末尾，并返回一个指向去重后范围末尾的迭代器。与你提供的代码相似，但还是有一些区别。下面是一个使用`std::unique`的示例：
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> a = {1, 2, 2, 3, 3, 3, 4, 5, 5};
+
+    // 使用 std::unique
+    auto newEnd = std::unique(a.begin(), a.end());
+
+    // 输出去重后的元素
+    for (auto it = a.begin(); it != newEnd; ++it) {
+        std::cout << *it << " ";
+    }
+
+    return 0;
+}
+```
+
+在上述代码中，`std::unique`返回的是一个指向去重后范围末尾的迭代器，你可以使用这个迭代器来访问去重后的元素。
+
+至于在Java中如何实现类似的功能，Java的`List`接口提供了`removeIf`方法，可以根据条件删除元素。下面是一个简单的Java实现：
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> a = new ArrayList<>();
+        a.add(1); a.add(2); a.add(2); a.add(3); a.add(3); a.add(3); a.add(4); a.add(5); a.add(5);
+
+        // 使用 removeIf 去除相邻重复元素
+        a.removeIf((Integer current) -> a.indexOf(current) != a.lastIndexOf(current));
+
+        // 输出去重后的元素
+        for (Integer value : a) {
+            System.out.print(value + " ");
+        }
+    }
+}
+```
+
+这里使用了`removeIf`方法，并传入一个Lambda表达式，该Lambda表达式判断元素在列表中首次出现的索引和最后一次出现的索引是否相等，如果不相等则认为是重复元素，并将其删除。
